@@ -7,14 +7,17 @@ import os
 class Portrait:
     def __init__(self):
         self.model = None
-        self.mode_path = os.path.join('weights', 'yolov8n-face.onnx')
         self.check()
         self.load_model()
 
     def check(self):
         model_url = 'https://github.com/hpc203/yolov8-face-landmarks-opencv-dnn/raw/main/weights/yolov8n-face.onnx'
-        if not os.path.exists(self.mode_path):
-            download_file(model_url, self.mode_path)
+        model_dir = os.path.join('face_landmark', 'weights')
+        os.makedirs(model_dir, exist_ok=True)
+        self.model_path = os.path.join(model_dir, 'yolov8n-face.onnx')
+
+        if not os.path.exists(self.model_path):
+            download_file(model_url, self.model_path)
 
     def load_model(self,
                    confThreshold=0.45,
